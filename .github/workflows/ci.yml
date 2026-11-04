@@ -18,7 +18,7 @@ jobs:
       - name: Docker build
         run: docker build -t te-app .
 
-  # Publishes ghcr.io/<owner>/te-demand-resource-manager:latest so servers can pull a ready image.
+  # Publishes ghcr.io/<owner>/te-app:latest so servers can pull a ready image.
   publish:
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and push image
         run: |
-          IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/te-demand-resource-manager"
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/te-app"
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           docker build --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
             -t "$IMAGE:latest" -t "$IMAGE:${GITHUB_SHA::7}" .
