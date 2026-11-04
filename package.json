@@ -1,0 +1,21 @@
+{
+  "name": "te-demand-resource-manager",
+  "version": "1.0.0",
+  "description": "Tooling & Equipment (T&E) Demand & Resource Management web app: intake, triage, approval, dispatch, capacity planning and Gantt views.",
+  "private": true,
+  "type": "module",
+  "main": "server/index.js",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2"
+  }
+}

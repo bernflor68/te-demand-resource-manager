@@ -1,0 +1,32 @@
+# T&E Demand & Resource Manager - app + Caddy reverse proxy (automatic HTTPS when DOMAIN is a real domain).
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "3000"
+      DATA_DIR: /app/data
+    volumes:
+      - ./data:/app/data        # SQLite database, uploads, backups (must be writable by uid 1000)
+    expose:
+      - "3000"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    environment:
+      DOMAIN: ${DOMAIN:-:80}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

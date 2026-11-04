@@ -1,0 +1,8 @@
+# DOMAIN=app.example.com -> automatic Let's Encrypt HTTPS. DOMAIN=:80 -> plain HTTP on the VPS IP.
+{$DOMAIN::80} {
+	encode gzip
+	request_body {
+		max_size 55MB
+	}
+	reverse_proxy app:3000
+}
